@@ -2,11 +2,10 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-axios.get('https://api.github.com/users/bigtonito39')
+let saved = axios.get('https://api.github.com/users/bigtonito39')
     .then(response => {
-        for (let [key, value] of Object.entries(response["data"])) {
-            savingDATA = { key, value };
-            console.log(savingDATA)
+        for (let [key, value] of Object.entries(response.data)) {
+            return response.data
         }
 
     })
@@ -64,42 +63,57 @@ const followersArray = [];
   luishrd
   bigknell
 */
-function cardComponents(singleObject) {
-    const div1Component = document.createElement("div");
-    const imgComponent = document.createElement("img");
-    const div2Component = document.createElement("div");
-    const h3Component = document.createElement("h3");
-    const p1Component = document.createElement("p");
-    const p2Component = document.createElement("p");
-    const p3Component = document.createElement("p");
-    const aComponent = document.createElement("a");
-    const p4Component = document.createElement("p");
-    const p5Component = document.createElement("p");
-    const p6Component = document.createElement("p");
 
-    div1Component.classList.add("card");
-    imgComponent.setAttribute("src", "#");
-    div2Component.classList.add("card-info");
-    h3Component.classList.add("name");
-    p1Component.classList.add("username");
-    aComponent.setAttribute("href", "#");
+//Here im using saved.then in order to pull the info saved on step 1
+saved.then(function(value) {
+    //im creating a function to pass the value into the carComponets function
 
-    const mainDiv = document.querySelector(".cards");
+    function cardComponents(singleObject) {
+        const div1Component = document.createElement("div");
+        const imgComponent = document.createElement("img");
+        const div2Component = document.createElement("div");
+        const h3Component = document.createElement("h3");
+        const p1Component = document.createElement("p");
+        const p2Component = document.createElement("p");
+        const p3Component = document.createElement("p");
+        const aComponent = document.createElement("a");
+        const p4Component = document.createElement("p");
+        const p5Component = document.createElement("p");
+        const p6Component = document.createElement("p");
 
-    mainDiv.appendChild(div1Component);
-    div1Component.appendChild(imgComponent);
-    div1Component.appendChild(div2Component);
-    div2Component.appendChild(h3Component);
-    div2Component.appendChild(p1Component);
-    div2Component.appendChild(p2Component);
-    div2Component.appendChild(p3Component);
-    p3Component.appendChild(aComponent);
-    div2Component.appendChild(p4Component)
-    div2Component.appendChild(p5Component)
-    div2Component.appendChild(p6Component)
+        div1Component.classList.add("card");
+
+        div2Component.classList.add("card-info");
+        h3Component.classList.add("name");
+        p1Component.classList.add("username");
 
 
+        const mainDiv = document.querySelector(".cards");
 
-}
+        mainDiv.appendChild(div1Component);
+        div1Component.appendChild(imgComponent);
+        div1Component.appendChild(div2Component);
+        div2Component.appendChild(h3Component);
+        div2Component.appendChild(p1Component);
+        div2Component.appendChild(p2Component);
+        div2Component.appendChild(p3Component);
+        p3Component.appendChild(aComponent);
+        div2Component.appendChild(p4Component);
+        div2Component.appendChild(p5Component);
+        div2Component.appendChild(p6Component);
 
-cardComponents();
+        for (let [key, value] of Object.entries(singleObject)) {
+            console.log(singleObject)
+            imgComponent.setAttribute("src", singleObject.avatar_url);
+            h3Component.textContent = singleObject.name;
+            p1Component.textContent = singleObject.login;
+            p2Component.textContent = singleObject.location;
+            aComponent.textContent = "Profile:"
+            aComponent.setAttribute("href", singleObject.html_url);
+
+        }
+    }
+    //here im passing the value into the carComponets function as an argument so i could use
+    //all over the place in my component function !
+    cardComponents(value)
+});
