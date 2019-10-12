@@ -4,9 +4,7 @@
 */
 let saved = axios.get('https://api.github.com/users/bigtonito39')
     .then(response => {
-        for (let [key, value] of Object.entries(response.data)) {
-            return response.data
-        }
+        return response.data
 
     })
     .catch(err => {
@@ -82,7 +80,6 @@ saved.then(function(value) {
         const p6Component = document.createElement("p");
 
         div1Component.classList.add("card");
-
         div2Component.classList.add("card-info");
         h3Component.classList.add("name");
         p1Component.classList.add("username");
@@ -97,7 +94,6 @@ saved.then(function(value) {
         div2Component.appendChild(p1Component);
         div2Component.appendChild(p2Component);
         div2Component.appendChild(p3Component);
-        p3Component.appendChild(aComponent);
         div2Component.appendChild(p4Component);
         div2Component.appendChild(p5Component);
         div2Component.appendChild(p6Component);
@@ -107,11 +103,21 @@ saved.then(function(value) {
             imgComponent.setAttribute("src", singleObject.avatar_url);
             h3Component.textContent = singleObject.name;
             p1Component.textContent = singleObject.login;
-            p2Component.textContent = singleObject.location;
-            aComponent.textContent = "Profile:"
+            p2Component.textContent = ` Location: ${singleObject.location}`;
+            p3Component.textContent = "Profile:";
+            p3Component.appendChild(aComponent);
+            aComponent.textContent = "  Click here!"
             aComponent.setAttribute("href", singleObject.html_url);
+            aComponent.style.textDecoration = "none";
+            aComponent.style.color = "red";
+            p4Component.textContent = ` Followers: ${singleObject.followers}`;
+            p5Component.textContent = ` Following: ${singleObject.following}`;
+            p6Component.textContent = ` Bio: ${singleObject.bio}`;
+
+
 
         }
+        return mainDiv;
     }
     //here im passing the value into the carComponets function as an argument so i could use
     //all over the place in my component function !
